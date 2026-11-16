@@ -1,0 +1,62 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      DB_URL: jdbc:postgresql://database:5432/cej
+      DB_USER: cej
+      DB_PASSWORD: ${DB_PASSWORD:?Définir DB_PASSWORD dans .env}
+      # HTTP sur localhost par défaut ; activer Secure derrière HTTPS.
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+      CEJ_BOOTSTRAP_ENABLED: ${CEJ_BOOTSTRAP_ENABLED:-false}
+      CEJ_BOOTSTRAP_EMAIL: ${CEJ_BOOTSTRAP_EMAIL:-}
+      CEJ_BOOTSTRAP_PASSWORD: ${CEJ_BOOTSTRAP_PASSWORD:-}
+      CEJ_BOOTSTRAP_FIRST_NAME: ${CEJ_BOOTSTRAP_FIRST_NAME:-}
+      CEJ_BOOTSTRAP_LAST_NAME: ${CEJ_BOOTSTRAP_LAST_NAME:-}
+      AUTH_MAX_ATTEMPTS: ${AUTH_MAX_ATTEMPTS:-10}
+      AUTH_WINDOW_SECONDS: ${AUTH_WINDOW_SECONDS:-900}
+      SMTP_HOST: ${SMTP_HOST:-mailpit}
+      SMTP_PORT: ${SMTP_PORT:-1025}
+      SMTP_USERNAME: ${SMTP_USERNAME:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_AUTH: ${SMTP_AUTH:-false}
+      SMTP_STARTTLS: ${SMTP_STARTTLS:-false}
+      MAIL_FROM: ${MAIL_FROM:-noreply@citeenjeux.local}
+      PUBLIC_URL: ${PUBLIC_URL:-http://localhost:8080}
+      INVITATION_HOURS: ${INVITATION_HOURS:-48}
+      BGG_API_TOKEN: ${BGG_API_TOKEN:-}
+    ports:
+      - "127.0.0.1:${APP_PORT:-8080}:8080"
+    depends_on:
+      database:
+        condition: service_healthy
+      mailpit:
+        condition: service_started
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+  mailpit:
+    image: axllent/mailpit:v1.27
+    ports:
+      - "127.0.0.1:${MAILPIT_PORT:-8025}:8025"
+    restart: unless-stopped
+  database:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: cej
+      POSTGRES_USER: cej
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Définir DB_PASSWORD dans .env}
+    volumes:
+      - cej_database:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cej -d cej"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+volumes:
+  cej_database:

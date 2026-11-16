@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f3fbfd"><title>La ludothèque · Cité en jeux</title>
+<link rel="icon" href="/logo_cej.png" type="image/png"><link rel="stylesheet" href="/styles.css"><script type="module" src="/library.js"></script>
+</head><body><div class="page-shell library-shell">
+<header class="site-header"><a class="brand" href="/member.html"><img class="brand-logo" src="/logo_cej.png" width="3543" height="3288" alt=""><span>Cité en jeux<span class="brand-caption">LA LUDOTHÈQUE</span></span></a><a href="/member.html">Mon espace</a></header>
+<p id="library-status" role="status" aria-live="polite">Vérification de votre accès…</p>
+<main id="library-content" hidden><div class="library-heading"><div><p class="eyebrow">LES JEUX DE L’ASSOCIATION</p><h1>La ludothèque</h1><p class="welcome-copy">De quoi partager de belles parties.</p></div><button id="new-game" class="submit-button" type="button" hidden>+ Ajouter un jeu</button></div>
+<div class="library-layout"><aside class="library-sidebar" aria-label="Recherche du catalogue">
+<details id="filter-panel" open><summary>Rechercher et filtrer</summary><form id="filters"><div class="field"><label for="search">Rechercher un jeu ou une extension</label><input id="search" name="search" type="search" placeholder="Nom du jeu…"></div>
+<div class="field"><label for="players">Nombre de joueurs</label><input id="players" name="players" type="number" min="1" step="1" placeholder="Tous"></div>
+<div class="field"><label for="availability">Disponibilité</label><select id="availability" name="availability"><option value="all">Tous les jeux</option><option value="available">Disponible</option><option value="unavailable">Indisponible</option></select></div>
+<div class="field"><label for="sort">Trier par</label><select id="sort" name="sort"><option value="name">Nom : A → Z</option><option value="recent">Ajouts récents</option><option value="availability">Disponibilité</option></select></div>
+<label class="checkbox-field" id="archived-filter" hidden><input id="show-archived" name="archived" type="checkbox"> Inclure les fiches archivées</label>
+<button type="submit" class="submit-button">Rechercher</button><button type="button" id="reset-filters" class="secondary-button">Réinitialiser</button></form></details>
+<div id="location-tools" hidden><hr><h2>Les emplacements</h2><p class="help-copy">Un exemplaire doit être rangé dans un emplacement sans sous-emplacements.</p><button type="button" id="new-location" class="secondary-button">Créer un emplacement</button></div>
+</aside><section aria-label="Résultats"><div class="catalogue-toolbar"><p id="results-count"></p><div role="group" aria-label="Affichage"><button id="grid-view" type="button" aria-pressed="true">Grille</button><button id="list-view" type="button" aria-pressed="false">Liste</button></div></div>
+<div id="games" class="game-grid"></div><nav class="pagination" aria-label="Pages du catalogue"><button id="previous-games" type="button">Précédente</button><span id="games-page"></span><button id="next-games" type="button">Suivante</button></nav></section></div></main>
+</div>
+<dialog id="game-dialog" aria-labelledby="detail-title"><div class="dialog-header"><h2 id="detail-title" tabindex="-1">Fiche de jeu</h2><button type="button" data-close="game-dialog" aria-label="Fermer la fiche">Fermer</button></div><div id="game-detail"></div><p id="detail-status" role="status" aria-live="polite"></p></dialog>
+<dialog id="edit-dialog" aria-labelledby="edit-title"><div class="dialog-header"><h2 id="edit-title">Fiche de jeu</h2><button type="button" data-close="edit-dialog">Annuler</button></div>
+<section id="bgg-import" class="bgg-import" aria-labelledby="bgg-title">
+<h3 id="bgg-title">Préremplir depuis BoardGameGeek</h3>
+<label for="bgg-link">Lien de la fiche BGG</label><div class="bgg-link-row"><input id="bgg-link" type="url" placeholder="https://boardgamegeek.com/boardgame/…"><button id="bgg-load" type="button" class="secondary-button">Récupérer les informations</button></div>
+<p class="help-copy">Les champs seront préremplis pour vérification. Aucun jeu ni exemplaire n’est enregistré à cette étape.</p>
+<p id="bgg-status" role="status" aria-live="polite"></p>
+<div id="bgg-cover-choice" hidden><img id="bgg-cover-preview" alt="Couverture proposée par BGG"><label class="checkbox-field"><input id="bgg-use-cover" type="checkbox" checked> Ajouter cette couverture à la fiche</label></div>
+<a href="https://boardgamegeek.com" target="_blank" rel="noopener noreferrer" class="bgg-credit"><img src="/powered-by-bgg.png" alt="Powered by BGG"></a>
+</section>
+<form id="game-form" method="post"><div id="game-fields" class="form-grid"></div><p id="similar-warning" role="status"></p><p id="save-status" role="status" aria-live="polite"></p><button id="save-game" type="submit" class="submit-button">Enregistrer la fiche</button></form></dialog>
+<dialog id="copy-dialog" aria-labelledby="copy-title"><div class="dialog-header"><h2 id="copy-title">Exemplaires</h2><button type="button" data-close="copy-dialog">Annuler</button></div><form id="copy-form" method="post"><p id="copy-help"></p><div id="copy-fields"></div><button id="add-copy-row" type="button" class="secondary-button">+ Un autre exemplaire</button><p id="copy-status" role="status" aria-live="polite"></p><button id="save-copies" class="submit-button" type="submit">Enregistrer</button></form></dialog>
+<dialog id="location-dialog" aria-labelledby="location-title"><div class="dialog-header"><h2 id="location-title">Créer un emplacement</h2><button type="button" data-close="location-dialog">Annuler</button></div><form id="location-form" method="post"><div class="field"><label for="location-name">Nom</label><input id="location-name" required></div><div class="field"><label for="location-parent">À l’intérieur de</label><select id="location-parent"></select></div><p class="help-copy">Les noms identiques sont autorisés. Les emplacements occupés ne peuvent pas recevoir de sous-emplacement.</p><p id="location-status" role="status"></p><button class="submit-button" type="submit">Créer</button></form></dialog>
+<dialog id="history-dialog" aria-labelledby="history-title"><div class="dialog-header"><h2 id="history-title">Historique administratif</h2><button type="button" data-close="history-dialog">Fermer</button></div><div id="history-content"></div></dialog>
+<dialog id="reason-dialog" aria-labelledby="reason-title"><div class="dialog-header"><h2 id="reason-title">Confirmer l’opération</h2><button type="button" data-close="reason-dialog">Annuler</button></div><form id="reason-form" method="post"><p id="reason-explanation"></p><div class="field"><label for="operation-reason">Motif obligatoire</label><textarea id="operation-reason" required rows="3"></textarea></div><p id="reason-status" role="status"></p><button class="submit-button" type="submit">Confirmer</button></form></dialog>
+</body></html>

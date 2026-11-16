@@ -1,0 +1,12 @@
+.git
+.github
+.idea
+.agents
+.codex
+.aws
+.env
+.env.*
+!.env.example
+**/target
+**/node_modules
+**/*.log

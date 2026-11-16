@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#f3fbfd">
+    <meta name="description" content="Connectez-vous à l’espace des membres de Cité en jeux.">
+    <title>Connexion · Cité en jeux</title>
+    <link rel="icon" href="./logo_cej.png" type="image/png">
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./login.js" type="module"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="./" aria-label="Cité en jeux — accueil">
+          <img class="brand-logo" src="./logo_cej.png" width="3543" height="3288" alt="">
+          <span>Cité en jeux<span class="brand-caption">LE PLAISIR DE JOUER ENSEMBLE</span></span>
+        </a>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Changer le thème" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M20.5 13A8.5 8.5 0 0 1 11 3.5 8.5 8.5 0 1 0 20.5 13Z"/></svg>
+          <span id="theme-label">Thème système</span>
+        </button>
+      </header>
+
+      <main id="main" class="login-layout">
+        <section class="welcome" aria-labelledby="welcome-title">
+          <p class="eyebrow"><span></span> L’ESPACE DE VOTRE ASSOCIATION</p>
+          <h1 id="welcome-title">Les bons moments<br>commencent par<br><em>une partie.</em></h1>
+          <p class="welcome-copy">Un jeu à découvrir, une soirée à partager.<br>Retrouvez toute la vie de Cité en jeux au même endroit.</p>
+
+          <div class="association-visual" aria-hidden="true">
+            <img src="./logo_cej.png" width="3543" height="3288" alt="">
+            <p>À vous de jouer.</p>
+          </div>
+
+          <div class="features"><span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="m3 5 7-3 7 3v10l-7 3-7-3zM3 5l7 3 7-3M10 8v10"/></svg> Empruntez des jeux</span><span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="3" y="4" width="14" height="13" rx="2"/><path d="M6 2v4m8-4v4M3 9h14m-10 4h6"/></svg> Partagez des soirées</span></div>
+        </section>
+
+        <section class="login-card" aria-labelledby="login-title">
+          <div class="member-label"><span></span> ESPACE MEMBRES</div>
+          <h2 id="login-title">Heureux de vous revoir.</h2>
+          <p class="login-intro">Connectez-vous pour préparer votre prochaine partie.</p>
+
+          <form id="login-form" action="/api/auth/login" method="post">
+            <div class="field">
+              <label for="email">Adresse email</label>
+              <input id="email" name="email" type="email" autocomplete="username" inputmode="email" autocapitalize="none" spellcheck="false" placeholder="vous@exemple.fr" required aria-describedby="email-error">
+              <p class="field-error" id="email-error" hidden></p>
+            </div>
+            <div class="field">
+              <label for="password">Mot de passe</label>
+              <div class="password-field">
+                <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Votre mot de passe" required aria-describedby="password-error">
+                <button id="password-toggle" class="password-toggle" type="button" aria-label="Afficher le mot de passe" aria-controls="password" aria-pressed="false" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+              </div>
+              <p class="field-error" id="password-error" hidden></p>
+            </div>
+            <div class="form-message" id="form-message" role="alert" hidden></div>
+            <button class="submit-button" id="submit-button" type="submit"><span>Se connecter</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></button>
+            <noscript><p class="help-copy">Activez JavaScript pour utiliser cette page de connexion.</p></noscript>
+          </form>
+
+          <div class="invitation-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><path d="M12 14v3"/></svg><p>Un espace réservé aux membres.<br><span>Les comptes sont créés sur invitation par les administrateurs de l’association.</span></p></div>
+          <div class="help-note"><strong>Besoin d’un coup de main ?</strong><p>Pour un accès ou un mot de passe oublié, contactez un administrateur de Cité en jeux.</p></div>
+        </section>
+      </main>
+      <footer><span>© <span id="year">2026</span> Cité en jeux</span><span>Des jeux, des rencontres, du partage.</span></footer>
+    </div>
+  </body>
+</html>

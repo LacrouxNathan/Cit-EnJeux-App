@@ -1,0 +1,5 @@
+# Option pour lancer Java depuis l’IDE tout en gardant PostgreSQL dans Docker.
+services:
+  database:
+    ports:
+      - "127.0.0.1:5432:5432"

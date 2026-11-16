@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark"><meta name="theme-color" content="#f3fbfd">
+  <title>Accueil · Cité en jeux</title>
+  <link rel="icon" href="./logo_cej.png" type="image/png"><link rel="stylesheet" href="./styles.css">
+  <script src="./member.js" type="module"></script>
+</head>
+<body>
+<div class="page-shell home-shell">
+  <header class="site-header">
+    <a class="brand" href="/member.html" aria-label="Cité en jeux — accueil"><img class="brand-logo" src="./logo_cej.png" width="3543" height="3288" alt=""><span>Cité en jeux<span class="brand-caption">LE PLAISIR DE JOUER ENSEMBLE</span></span></a>
+    <button class="secondary-button home-logout" id="logout" type="button">Se déconnecter <span aria-hidden="true">↗</span></button>
+  </header>
+  <main aria-labelledby="member-title">
+    <p id="session-status" class="home-status" role="status">Vérification de votre session…</p>
+    <div id="member-content" hidden>
+      <section class="home-welcome">
+        <div class="home-welcome-copy">
+          <p class="eyebrow"><span></span> VOTRE ESPACE ASSOCIATIF</p>
+          <h1 id="member-title">Bonjour <span id="display-name"></span>,<br>à vous de <em>jouer.</em></h1>
+          <p class="home-intro">Un jeu à découvrir, une collection à faire vivre.<br>Retrouvez votre association en quelques clics.</p>
+          <a class="home-primary" href="/library.html">Explorer la ludothèque <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="home-visual" aria-hidden="true"><span class="home-orbit orbit-one"></span><span class="home-orbit orbit-two"></span><div class="home-logo-paper"><img src="./logo_cej.png" width="3543" height="3288" alt=""></div><span class="home-sticker">On joue ensemble ?</span></div>
+      </section>
+      <section class="home-destinations" aria-labelledby="destinations-title">
+        <div class="home-section-heading"><div><p class="eyebrow">LES ACCÈS RAPIDES</p><h2 id="destinations-title">Que souhaitez-vous faire ?</h2></div><span class="home-role" id="member-role"></span></div>
+        <nav class="home-cards" aria-label="Rubriques de l’application">
+          <a class="home-card" href="/library.html"><span class="home-card-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="5" y="5" width="22" height="22" rx="5"/><circle cx="11" cy="11" r="1"/><circle cx="21" cy="11" r="1"/><circle cx="16" cy="16" r="1"/><circle cx="11" cy="21" r="1"/><circle cx="21" cy="21" r="1"/></svg></span><h3>La ludothèque</h3><p>Trouvez votre prochaine partie. Découvrez les jeux et leurs disponibilités.</p><span class="home-card-action">Parcourir les jeux <span aria-hidden="true">↗</span></span></a>
+          <a class="home-card home-card-orange" id="manage-games-link" href="/library.html?action=new" hidden><span class="home-card-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M7 5h13l5 5v17H7zM20 5v6h5M11 17h10M16 12v10"/></svg></span><h3>Faire vivre la collection</h3><p>Ajoutez une fiche de jeu, ses informations et sa couverture à la ludothèque.</p><span class="home-card-action">Ajouter un jeu <span aria-hidden="true">↗</span></span></a>
+          <a class="home-card" id="admin-users-link" href="/admin-users.html" hidden><span class="home-card-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="13" cy="11" r="5"/><path d="M3 27v-3a10 10 0 0 1 20 0v3M22 7a5 5 0 0 1 0 9M25 19a8 8 0 0 1 4 8"/></svg></span><h3>Les membres</h3><p>Accueillez les membres, gérez leurs comptes, leurs adhésions et leurs rôles.</p><span class="home-card-action">Gérer les utilisateurs <span aria-hidden="true">↗</span></span></a>
+          <a class="home-card" id="board-reset-link" href="/member-resets.html" hidden><span class="home-card-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="7" y="14" width="18" height="14" rx="3"/><path d="M11 14V9a5 5 0 0 1 10 0v5M16 20v3"/></svg></span><h3>Aider un membre</h3><p>Envoyez un lien par email à un membre qui a oublié son mot de passe.</p><span class="home-card-action">Réinitialiser un mot de passe <span aria-hidden="true">↗</span></span></a>
+        </nav>
+      </section>
+      <aside class="home-membership"><span class="home-membership-mark" id="membership-mark" aria-hidden="true"></span><div><h2>Votre adhésion</h2><p id="membership-status"></p></div><span class="home-membership-note">Une question ? Contactez un administrateur de l’association.</span></aside>
+    </div>
+    <p><a id="login-link" href="/" hidden>Revenir à la connexion</a></p>
+  </main>
+  <footer><span>Cité en jeux · L’association qui rassemble autour du jeu.</span><span>À chaque partie, de nouvelles rencontres.</span></footer>
+</div>
+</body>
+</html>

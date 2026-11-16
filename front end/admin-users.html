@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark"><meta name="theme-color" content="#f3fbfd">
+  <title>Utilisateurs · Cité en jeux</title>
+  <link rel="icon" href="./logo_cej.png" type="image/png"><link rel="stylesheet" href="./styles.css">
+  <script src="./admin-users.js" type="module"></script>
+</head>
+<body><div class="page-shell admin-shell">
+  <header class="site-header"><a class="brand" href="/member.html"><img class="brand-logo" src="./logo_cej.png" width="3543" height="3288" alt=""><span>Cité en jeux<span class="brand-caption">ADMINISTRATION</span></span></a><a href="/member.html">Mon espace</a></header>
+  <p id="admin-status" role="status" aria-live="polite">Vérification de vos droits…</p>
+  <main id="admin-content" hidden>
+    <h1>Les membres</h1><p class="welcome-copy">Invitez les membres et gérez leurs accès à l’association.</p>
+    <div class="admin-layout">
+      <section class="login-card" aria-labelledby="create-title">
+        <h2 id="create-title">Créer un utilisateur</h2>
+        <p class="login-intro">Un email d’invitation permettra au membre de choisir son mot de passe. Le compte créé aura les droits membre.</p>
+        <form id="create-user-form" method="post" action="/api/admin/users">
+          <div class="field"><label for="first-name">Prénom</label><input id="first-name" name="firstName" autocomplete="given-name" required></div>
+          <div class="field"><label for="last-name">Nom</label><input id="last-name" name="lastName" autocomplete="family-name" required></div>
+          <div class="field"><label for="user-email">Adresse email</label><input id="user-email" name="email" type="email" autocomplete="email" required></div>
+          <div class="field"><label for="nickname">Pseudonyme (facultatif)</label><input id="nickname" name="nickname" autocomplete="nickname"></div>
+          <label class="checkbox-field"><input name="membershipCurrent" type="checkbox"> Adhésion à jour</label>
+          <button class="submit-button" type="submit" id="create-submit">Créer et envoyer l’invitation</button>
+        </form>
+      </section>
+      <section class="login-card" aria-labelledby="users-title"><h2 id="users-title">Comptes de l’association</h2>
+        <p class="login-intro">Les liens expirés peuvent être renvoyés ici. Chaque renvoi invalide le lien précédent.</p>
+        <form id="user-filters" class="member-filters">
+          <div class="field"><label for="member-search">Rechercher un membre</label><input id="member-search" name="search" type="search" placeholder="Nom, pseudonyme ou email"></div>
+          <div class="field"><label for="member-status">Statut</label><select id="member-status" name="status"><option value="all">Tous les statuts</option><option value="active">Actifs</option><option value="inactive">Désactivés</option><option value="pending">Invitation non acceptée</option></select></div>
+          <div class="field"><label for="member-role">Rôle</label><select id="member-role" name="role"><option value="all">Tous les rôles</option><option value="board">Membres du CA</option><option value="admin">Administrateurs</option><option value="member">Membres</option></select></div>
+          <div class="field"><label for="member-membership">Adhésion</label><select id="member-membership" name="membership"><option value="all">Toutes les adhésions</option><option value="current">À jour</option><option value="expired">Non à jour</option></select></div>
+          <div class="action-row"><button type="submit" class="secondary-button">Filtrer</button><button type="button" class="secondary-button" id="reset-user-filters">Réinitialiser</button></div>
+        </form>
+        <div id="users-list"></div>
+        <nav class="pagination" aria-label="Pages des utilisateurs"><button type="button" id="previous-page">Précédente</button><span id="page-number"></span><button type="button" id="next-page">Suivante</button></nav>
+      </section>
+    </div>
+  </main>
+</div>
+<dialog id="edit-user-dialog" aria-labelledby="edit-user-title">
+  <div class="dialog-header"><h2 id="edit-user-title">Modifier un membre</h2><button type="button" id="close-edit-user">Annuler</button></div>
+  <form id="edit-user-form" method="post">
+    <div class="form-grid">
+      <div class="field"><label for="edit-first-name">Prénom</label><input id="edit-first-name" name="firstName" required autocomplete="given-name"></div>
+      <div class="field"><label for="edit-last-name">Nom</label><input id="edit-last-name" name="lastName" required autocomplete="family-name"></div>
+      <div class="field"><label for="edit-email">Adresse email</label><input id="edit-email" name="email" required type="email" autocomplete="email"></div>
+      <div class="field"><label for="edit-nickname">Pseudonyme (facultatif)</label><input id="edit-nickname" name="nickname" autocomplete="nickname"></div>
+    </div>
+    <div class="field"><label for="edit-role">Rôle</label><select id="edit-role" name="role"><option value="member">Membre</option><option value="board">Membre du CA</option><option value="admin">Administrateur</option></select></div>
+    <p class="help-copy">Le CA peut gérer les fiches de jeux, mais pas les comptes ni le stock physique. Les administrateurs disposent des mêmes droits de gestion. Il doit toujours rester un administrateur actif ayant activé son compte.</p>
+    <label class="checkbox-field"><input id="edit-membership" name="membershipCurrent" type="checkbox"> Adhésion à jour</label>
+    <label class="checkbox-field"><input id="edit-active" name="active" type="checkbox"> Compte actif</label>
+    <p class="help-copy">La désactivation ferme les accès sans supprimer le compte ni ses historiques. La réactivation ne restaure pas les anciennes sessions. Un changement d’email ferme aussi les sessions ; pour un compte non activé, il faut renvoyer une invitation à la nouvelle adresse.</p>
+    <p id="edit-user-status" role="status" aria-live="polite"></p>
+    <button class="submit-button" id="save-user" type="submit">Enregistrer les modifications</button>
+  </form>
+</dialog>
+<dialog id="user-history-dialog" aria-labelledby="user-history-title">
+  <div class="dialog-header"><h2 id="user-history-title">Historique du membre</h2><button type="button" id="close-user-history">Fermer</button></div>
+  <div id="user-history-content"></div>
+</dialog>
+</body></html>
